@@ -1,0 +1,4 @@
+export(as.datcli)
+export(peguy)
+import(ggplot2)
+import(reshape2)
