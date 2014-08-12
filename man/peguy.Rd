@@ -10,7 +10,8 @@ peguy(data = NULL, TemperatureTriangleCoords = c(0, 23.4, 15),
   color.scale = "monthly", ...)
 }
 \arguments{
-  \item{data}{input dataset with monthly weather data}
+  \item{data}{input dataset with climatological monthly
+  weather data}
 
   \item{TemperatureTriangleCoords}{Temperature coordinates
   for triangle vertices in the Peguy Climograph. Default

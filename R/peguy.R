@@ -12,7 +12,7 @@ NULL
 #' 
 #' 
 #' 
-#' @param data input dataset with monthly weather data
+#' @param data input dataset with climatological monthly weather data
 #' @param TemperatureTriangleCoords Temperature coordinates for triangle vertices in the Peguy Climograph. Default coordinates are expressed in Celsius Degrees.
 #' @param PrecipitationTriangleCoords Precipitation coordinates for triangle vertices in the Peguy Climograph. Default coordinates are expressed in millimeters.
 #' @param xlab,ylab xy axis labels
@@ -85,10 +85,15 @@ peguy <- function(data=NULL,TemperatureTriangleCoords=c(0,23.4,15),Precipitation
 		textcoords[1,i] <- mean(dfcoords[-1,i])
 		
 	}
+	
+	if (length(lambda.label)==(nrow(textcoords)-1)) lambda.label <- c(0,lambda.label)
+	if (length(lambda.label)<nrow(textcoords)) lambda.label <- array(lambda.label,nrow(textcoords))
+	
+	
 	for (r in 2:nrow(textcoords)) {
 		cond <- which(!(names(textcoords) %in% "textlabel"))
 		
-		textcoords[r,cond] <- (1-lambda.label)*dfcoords[r,cond]+lambda.label*textcoords[1,cond]
+		textcoords[r,cond] <- (1-lambda.label[r])*dfcoords[r,cond]+lambda.label[r]*textcoords[1,cond]
 		
 	}
 	
@@ -107,7 +112,7 @@ peguy <- function(data=NULL,TemperatureTriangleCoords=c(0,23.4,15),Precipitation
 			first=4
 			scale=rainbow(lenscale)[lenscale:1][c(first:lenscale,1:(first-1))]
 			out <- out+scale_colour_manual(values = scale)
-		} else if (is.numeric(color.scale)) {
+		} else if (is.numeric(color.scale[1])) {
 			
 			scale=color.scale
 			out <- out+scale_colour_manual(values = scale)
